@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>班级新媒体交互设计课程作业展示</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+        
+        nav ul li a:hover {
+            opacity: 0.8;
+        }
+        
+        /* 主内容区样式 */
+        main {
+            padding: 2rem 0;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 3rem;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+            color: #555;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+        
+        .btn-danger {
+            background: #e74c3c;
+        }
+        
+        .btn-success {
+            background: #2ecc71;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #6a11cb;
+            color: #6a11cb;
+        }
+        
+        .btn-outline:hover {
+            background: #6a11cb;
+            color: white;
+        }
+        
+        /* 控制面板样式 */
+        .control-panel {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .search-box {
+            display: flex;
+            flex: 1;
+            max-width: 400px;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 30px 0 0 30px;
+            outline: none;
+        }
+        
+        .search-box button {
+            background: #6a11cb;
+            color: white;
+            border: none;
+            padding: 0 1.2rem;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .filters select {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        /* 作业展示区样式 */
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+            font-size: 2rem;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .project-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .project-image {
+            height: 180px;
+            background-color: #f1f3f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 500;
+            position: relative;
+        }
+        
+        .project-actions {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+        }
+        
+        .project-actions button {
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .project-actions button:hover {
+            background: white;
+        }
+        
+        .project-content {
+            padding: 1.5rem;
+        }
+        
+        .project-content h3 {
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+        
+        .project-content p {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+        
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #6c757d;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .assignment-badge {
+            display: inline-block;
+            background: #6a11cb;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+        }
+        
+        .project-url {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .project-url a {
+            color: #2575fc;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+        
+        .project-url a:hover {
+            color: #6a11cb;
+            text-decoration: underline;
+        }
+        
+        .student-id {
+            font-size: 0.75rem;
+            color: #6c757d;
+            margin-left: 0.5rem;
+            font-weight: normal;
+        }
+        
+        /* 关于我们区域 */
+        .about {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 3rem;
+        }
+        
+        .about h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+        }
+        
+        .about p {
+            margin-bottom: 1rem;
+            text-align: center;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* 模态窗口样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-header h2 {
+            color: #2c3e50;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6c757d;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            outline: none;
+            transition: border 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #6a11cb;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            margin: 1rem 0;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+        
+        .copyright {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.75rem;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .control-panel {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                max-width: 100%;
+            }
+        }
+        
+        /* 加载状态 */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            font-size: 1.2rem;
+            color: #6c757d;
+        }
+        
+        .error {
+            text-align: center;
+            padding: 2rem;
+            background: #ffeaea;
+            border-radius: 10px;
+            color: #e74c3c;
+            margin-bottom: 2rem;
+        }
+        
+        /* 消息提示 */
+        .message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 5px;
+            color: white;
+            font-weight: 500;
+            z-index: 10000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: transform 0.3s, opacity 0.3s;
+        }
+        
+        .message.success {
+            background: #2ecc71;
+        }
+        
+        .message.error {
+            background: #e74c3c;
+        }
+        
+        .message.info {
+            background: #3498db;
+        }
+        
+        .url-status {
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+        }
+        
+        .url-status.valid {
+            color: #2ecc71;
+        }
+        
+        .url-status.invalid {
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部 -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>新媒体交互设计课程作业展示</h1>
+                    <p>班级：网络新媒体2024级</p>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#projects">作业展示</a></li>
+                        <li><a href="#about">关于我们</a></li>
+                        <li><a href="#contact">联系我们</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main>
+        <div class="container">
+            <!-- 欢迎区域 -->
+            <section class="hero">
+                <h2>欢迎来到我们的新媒体交互设计作品展</h2>
+                <p>这里展示了我们班级同学在新媒体交互设计课程中的优秀作品，涵盖了HTML、CSS、JavaScript等前端技术的应用。</p>
+                <button id="addProjectBtn" class="btn" disabled="disabled">
+                    <i class="fas fa-plus"></i> 添加新作业
+                </button>
+            </section>
+
+            <!-- 控制面板 -->
+            <section class="control-panel">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="搜索作业名称或学生姓名...">
+                    <button id="searchBtn"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="filters">
+                    <select id="assignmentFilter">
+                        <option value="0">所有作业</option>
+                        <option value="1">第1次作业</option>
+                        <option value="2">第2次作业</option>
+                        <option value="3">第3次作业</option>
+                        <option value="4">第4次作业</option>
+                        <option value="5">第5次作业</option>
+                    </select>
+                    <select id="categoryFilter">
+                        <option value="">所有类别</option>
+                        <option value="HTML/CSS">HTML/CSS</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="JavaScript/API">JavaScript/API</option>
+                    </select>
+                    <select id="studentFilter">
+                        <option value="">所有学生</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- 加载状态 -->
+            <div id="loadingMessage" class="loading">
+                <i class="fas fa-spinner fa-spin"></i> 正在加载数据...
+            </div>
+
+            <!-- 错误信息 -->
+            <div id="errorMessage" class="error" style="display: none;">
+                <i class="fas fa-exclamation-triangle"></i> 数据加载失败，请检查网络连接或JSON文件路径
+            </div>
+
+            <!-- 作业展示区 -->
+            <section id="projects">
+                <h2 class="section-title">学生作品展示</h2>
+                <div class="projects-grid" id="projectsContainer">
+                    <!-- 项目卡片将通过JavaScript动态生成 -->
+                </div>
+            </section>
+
+            <!-- 关于我们区域 -->
+            <section id="about" class="about">
+                <h2>关于我们</h2>
+                <p>我们是网络新媒体2024级的学生，在新媒体交互设计课程中，我们学习了HTML、CSS和JavaScript等前端技术，并通过实践项目加深了对这些技术的理解。</p>
+                <p>这个展示页面是我们课程作业的一部分，展示了每位同学的创意和技术能力。我们希望通过这个平台分享我们的学习成果，并互相学习、共同进步。</p>
+            </section>
+        </div>
+    </main>
+
+    <!-- 添加/编辑作业的模态窗口 -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">添加新作业</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="projectForm">
+                <input type="hidden" id="projectId">
+                <div class="form-group">
+                    <label for="projectTitle">作业标题</label>
+                    <input type="text" id="projectTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="projectDescription">作业描述</label>
+                    <textarea id="projectDescription" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="projectStudent">学生姓名</label>
+                    <select id="projectStudent" required>
+                        <option value="">请选择学生</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="projectDate">提交日期</label>
+                    <input type="date" id="projectDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="projectCategory">作业类别</label>
+                    <select id="projectCategory" required>
+                        <option value="">请选择类别</option>
+                        <option value="HTML/CSS">HTML/CSS</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="JavaScript/API">JavaScript/API</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="projectAssignment">作业次数</label>
+                    <select id="projectAssignment" required>
+                        <option value="">请选择作业次数</option>
+                        <option value="1">第1次作业</option>
+                        <option value="2">第2次作业</option>
+                        <option value="3">第3次作业</option>
+                        <option value="4">第4次作业</option>
+                        <option value="5">第5次作业</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="projectUrl">作业在线URL地址</label>
+                    <input type="url" id="projectUrl" placeholder="https://example.com/assignment1" 
+                           pattern="https?://.+" title="请输入有效的URL地址（以http://或https://开头）">
+                    <div id="urlStatus" class="url-status"></div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">取消</button>
+                    <button type="submit" class="btn btn-success">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <h3>新媒体交互设计作业展示</h3>
+                <div class="footer-links">
+                    <a href="#projects">作品展示</a>
+                    <a href="#about">关于我们</a>
+                    <a href="mailto:class@example.com">联系我们</a>
+                </div>
+                <p class="copyright">© 2025 新媒体交互设计2024级 - 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 学生作业数据
+        let projects = [];
+        let students = [];
+
+        // DOM元素
+        const projectsContainer = document.getElementById('projectsContainer');
+        const projectModal = document.getElementById('projectModal');
+        const projectForm = document.getElementById('projectForm');
+        const modalTitle = document.getElementById('modalTitle');
+        const projectId = document.getElementById('projectId');
+        const projectTitle = document.getElementById('projectTitle');
+        const projectDescription = document.getElementById('projectDescription');
+        const projectStudent = document.getElementById('projectStudent');
+        const projectDate = document.getElementById('projectDate');
+        const projectCategory = document.getElementById('projectCategory');
+        const projectAssignment = document.getElementById('projectAssignment');
+        const projectUrl = document.getElementById('projectUrl');
+        const urlStatus = document.getElementById('urlStatus');
+        const addProjectBtn = document.getElementById('addProjectBtn');
+        const closeBtn = document.querySelector('.close-btn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const studentFilter = document.getElementById('studentFilter');
+        const assignmentFilter = document.getElementById('assignmentFilter');
+        const loadingMessage = document.getElementById('loadingMessage');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // 颜色数组用于项目卡片
+        const colors = ['#6a11cb', '#2575fc', '#ff6b6b', '#4ecdc4', '#45b7d1', '#f9c74f'];
+
+        // 初始化页面
+        async function init() {
+            try {
+                // 加载学生数据
+                const studentsResponse = await fetch('students.json');
+                if (!studentsResponse.ok) {
+                    throw new Error('无法加载学生数据');
+                }
+                students = await studentsResponse.json();
+                
+                // 加载作业数据
+                const projectsResponse = await fetch('projects.json');
+                if (!projectsResponse.ok) {
+                    throw new Error('无法加载作业数据');
+                }
+                projects = await projectsResponse.json();
+                
+                console.log("加载的作业数据:", projects);
+                
+                // 验证数据关联
+                validateDataAssociation();
+                
+                // 隐藏加载消息
+                loadingMessage.style.display = 'none';
+                
+                // 渲染项目
+                renderProjects();
+                updateStudentFilter();
+                
+                // 事件监听
+                addProjectBtn.addEventListener('click', () => openModal());
+                closeBtn.addEventListener('click', () => closeModal());
+                cancelBtn.addEventListener('click', () => closeModal());
+                projectForm.addEventListener('submit', handleFormSubmit);
+                searchBtn.addEventListener('click', handleSearch);
+                searchInput.addEventListener('keyup', (e) => {
+                    if (e.key === 'Enter') handleSearch();
+                });
+                categoryFilter.addEventListener('change', filterProjects);
+                studentFilter.addEventListener('change', filterProjects);
+                assignmentFilter.addEventListener('change', filterProjects);
+                
+                // URL验证
+                projectUrl.addEventListener('input', validateUrl);
+                
+                // 点击模态窗口外部关闭
+                window.addEventListener('click', (e) => {
+                    if (e.target === projectModal) {
+                        closeModal();
+                    }
+                });
+            } catch (error) {
+                console.error('初始化失败:', error);
+                loadingMessage.style.display = 'none';
+                errorMessage.style.display = 'block';
+            }
+        }
+
+        // 验证数据关联（使用studentId作为外键）
+        function validateDataAssociation() {
+            const invalidProjects = [];
+            
+            projects.forEach(project => {
+                // 查找匹配的学生（使用students.json中的studentId字段）
+                const student = students.find(s => s.studentId === project.studentId);
+                
+                if (!student) {
+                    invalidProjects.push({
+                        project: project,
+                        issue: `找不到学号: ${project.studentId}`
+                    });
+                    console.warn(`项目 "${project.title}" 关联的学号 ${project.studentId} 不存在`);
+                }
+            });
+            
+            if (invalidProjects.length > 0) {
+                console.warn(`发现 ${invalidProjects.length} 个数据关联问题`);
+                showMessage(`发现 ${invalidProjects.length} 个数据关联问题，请检查控制台`, 'error');
+            }
+        }
+
+        // URL验证函数
+        function validateUrl() {
+            const url = projectUrl.value;
+            if (!url) {
+                urlStatus.textContent = '';
+                return true;
+            }
+            
+            const urlPattern = /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/;
+            
+            if (urlPattern.test(url)) {
+                urlStatus.textContent = '✓ URL格式正确';
+                urlStatus.className = 'url-status valid';
+                return true;
+            } else {
+                urlStatus.textContent = '✗ 请输入有效的URL地址（以http://或https://开头）';
+                urlStatus.className = 'url-status invalid';
+                return false;
+            }
+        }
+
+        // 渲染项目卡片
+        function renderProjects(projectsToRender = projects) {
+            projectsContainer.innerHTML = '';
+            
+            if (projectsToRender.length === 0) {
+                projectsContainer.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; padding: 2rem;">没有找到匹配的作业</p>';
+                return;
+            }
+            
+            projectsToRender.forEach(project => {
+                const projectCard = document.createElement('div');
+                projectCard.className = 'project-card';
+                
+                // 查找学生信息（使用studentId字段关联）
+                const studentInfo = students.find(s => s.studentId === project.studentId);
+                const studentName = studentInfo ? studentInfo.name : '未知学生';
+                const studentId = studentInfo ? studentInfo.studentId : `学号:${project.studentId}`;
+                
+                // 生成随机颜色作为项目图片背景
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                projectCard.innerHTML = `
+                    <div class="project-image" style="background-color: ${randomColor};">
+                        ${project.title}
+                        <div class="project-actions">
+                            <button class="edit-btn" data-id="${project.id}" disabled="disabled">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="delete-btn" data-id="${project.id}" disabled="disabled">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>${project.title}</h3>
+                        <p>${project.description}</p>
+                        <div class="assignment-badge">第${project.assignment}次作业</div>
+                        <div class="project-meta">
+                            <span>作者: ${studentName} <span class="student-id">(${studentId})</span></span>
+                            <span>${project.date}</span>
+                        </div>
+                        <div class="project-meta">
+                            <span>类别: ${project.category}</span>
+                        </div>
+                        ${project.www ? `
+                        <div class="project-url">
+                            <a href="${project.www}" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-external-link-alt"></i>
+                                查看在线演示
+                            </a>
+                        </div>
+                        ` : ''}
+                    </div>
+                `;
+                
+                projectsContainer.appendChild(projectCard);
+            });
+            
+            // 添加编辑和删除按钮的事件监听
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(e.currentTarget.getAttribute('data-id'));
+                    openModal(id);
+                });
+            });
+            
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(e.currentTarget.getAttribute('data-id'));
+                    deleteProject(id);
+                });
+            });
+        }
+
+        // 打开模态窗口（添加或编辑）
+        function openModal(id = null) {
+            // 更新学生选择下拉框
+            updateStudentSelect();
+            
+            if (id) {
+                // 编辑模式
+                const project = projects.find(p => p.id === id);
+                if (project) {
+                    modalTitle.textContent = '编辑作业';
+                    projectId.value = project.id;
+                    projectTitle.value = project.title;
+                    projectDescription.value = project.description;
+                    projectStudent.value = project.studentId; // 使用学号作为值
+                    projectDate.value = project.date;
+                    projectCategory.value = project.category;
+                    projectAssignment.value = project.assignment;
+                    projectUrl.value = project.www || '';
+                    
+                    validateUrl();
+                }
+            } else {
+                // 添加模式
+                modalTitle.textContent = '添加新作业';
+                projectForm.reset();
+                projectId.value = '';
+                projectDate.value = new Date().toISOString().split('T')[0];
+                urlStatus.textContent = '';
+            }
+            
+            projectModal.style.display = 'flex';
+        }
+
+        // 更新学生选择下拉框（使用学号作为值）
+        function updateStudentSelect() {
+            projectStudent.innerHTML = '<option value="">请选择学生</option>';
+            
+            students.forEach(student => {
+                const option = document.createElement('option');
+                option.value = student.studentId; // 使用学号作为值
+                option.textContent = `${student.name} (${student.studentId})`;
+                projectStudent.appendChild(option);
+            });
+        }
+
+        // 处理表单提交
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            // 验证URL格式
+            if (projectUrl.value && !validateUrl()) {
+                alert('请输入有效的URL地址');
+                return;
+            }
+            
+            const id = projectId.value ? parseInt(projectId.value) : Date.now();
+            const title = projectTitle.value;
+            const description = projectDescription.value;
+            const studentId = projectStudent.value; // 这里存储的是学号
+            const date = projectDate.value;
+            const category = projectCategory.value;
+            const assignment = projectAssignment.value;
+            const www = projectUrl.value;
+            
+            // 查找学生信息（使用学号查找）
+            const studentInfo = students.find(s => s.studentId === studentId);
+            if (!studentInfo) {
+                alert('请选择有效的学生');
+                return;
+            }
+            
+            const projectData = {
+                id,
+                title,
+                description,
+                studentId: studentId, // 存储学号
+                date,
+                category,
+                assignment: parseInt(assignment),
+                www: www || null
+            };
+            
+            if (projectId.value) {
+                // 更新现有项目
+                const index = projects.findIndex(p => p.id === id);
+                if (index !== -1) {
+                    projects[index] = projectData;
+                }
+            } else {
+                // 添加新项目
+                projects.push(projectData);
+            }
+            
+            renderProjects();
+            updateStudentFilter();
+            closeModal();
+            
+            showMessage('作业已保存！', 'success');
+        }
+
+        // 删除项目
+        function deleteProject(id) {
+            if (confirm('确定要删除这个作业吗？')) {
+                projects = projects.filter(p => p.id !== id);
+                renderProjects();
+                updateStudentFilter();
+                
+                showMessage('作业已删除！', 'success');
+            }
+        }
+
+        // 显示消息
+        function showMessage(message, type = 'info') {
+            const messageEl = document.createElement('div');
+            messageEl.className = `message ${type}`;
+            messageEl.textContent = message;
+            messageEl.style.transform = 'translateX(100%)';
+            messageEl.style.opacity = '0';
+            
+            document.body.appendChild(messageEl);
+            
+            // 显示动画
+            setTimeout(() => {
+                messageEl.style.transform = 'translateX(0)';
+                messageEl.style.opacity = '1';
+            }, 100);
+            
+            // 5秒后自动隐藏
+            setTimeout(() => {
+                messageEl.style.transform = 'translateX(100%)';
+                messageEl.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(messageEl);
+                }, 300);
+            }, 5000);
+        }
+
+        // 更新学生筛选器（使用学号作为值）
+        function updateStudentFilter() {
+            const uniqueStudents = [];
+            const studentMap = new Map();
+            
+            projects.forEach(project => {
+                const studentInfo = students.find(s => s.studentId === project.studentId);
+                if (studentInfo && !studentMap.has(studentInfo.studentId)) {
+                    studentMap.set(studentInfo.studentId, true);
+                    uniqueStudents.push({
+                        studentId: studentInfo.studentId,
+                        name: studentInfo.name
+                    });
+                }
+            });
+            
+            studentFilter.innerHTML = '<option value="">所有学生</option>';
+            
+            uniqueStudents.forEach(student => {
+                const option = document.createElement('option');
+                option.value = student.studentId; // 使用学号作为值
+                option.textContent = student.name;
+                studentFilter.appendChild(option);
+            });
+        }
+
+        // 处理搜索
+        function handleSearch() {
+            const searchTerm = searchInput.value.toLowerCase();
+            filterProjects();
+        }
+
+        // 筛选项目（使用学号进行筛选）- 修复版本
+        function filterProjects() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const categoryValue = categoryFilter.value;
+            const studentValue = studentFilter.value;
+            const assignmentValue = assignmentFilter.value;
+            
+            console.log("筛选条件:", {
+                searchTerm,
+                categoryValue,
+                studentValue,
+                assignmentValue
+            });
+            
+            const filteredProjects = projects.filter(project => {
+                const studentInfo = students.find(s => s.studentId === project.studentId);
+                const studentName = studentInfo ? studentInfo.name : '';
+                
+                const matchesSearch = project.title.toLowerCase().includes(searchTerm) || 
+                                     studentName.toLowerCase().includes(searchTerm) ||
+                                     project.description.toLowerCase().includes(searchTerm);
+                
+                const matchesCategory = !categoryValue || project.category === categoryValue;
+                const matchesStudent = !studentValue || project.studentId === studentValue;
+                
+                // 修复作业次数筛选逻辑 - 使用宽松比较
+                let matchesAssignment = true;
+                if (assignmentValue !== "0") {
+                    // 使用 == 而不是 === 进行宽松比较，处理字符串和数字类型
+                    matchesAssignment = project.assignment == assignmentValue;
+                }
+                
+                console.log(`项目 "${project.title}" (作业${project.assignment}):`, {
+                    matchesSearch,
+                    matchesCategory,
+                    matchesStudent,
+                    matchesAssignment,
+                    projectAssignment: project.assignment,
+                    filterAssignment: assignmentValue
+                });
+                
+                return matchesSearch && matchesCategory && matchesStudent && matchesAssignment;
+            });
+            
+            console.log("筛选结果:", filteredProjects);
+            
+            renderProjects(filteredProjects);
+        }
+
+        // 数据一致性检查工具
+        function checkDataConsistency() {
+            const issues = [];
+            
+            // 检查projects.json中的studentId是否都存在于students.json中
+            projects.forEach(project => {
+                if (!students.find(s => s.studentId === project.studentId)) {
+                    issues.push(`项目"${project.title}"关联了不存在的学号: ${project.studentId}`);
+                }
+            });
+            
+            // 检查是否有重复的学号
+            const studentIds = students.map(s => s.studentId);
+            const duplicateIds = studentIds.filter((id, index) => studentIds.indexOf(id) !== index);
+            if (duplicateIds.length > 0) {
+                issues.push(`发现重复的学号: ${duplicateIds.join(', ')}`);
+            }
+            
+            return issues;
+        }
+
+        // 关闭模态窗口
+        function closeModal() {
+            projectModal.style.display = 'none';
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
+</body>
+</html>
